@@ -1,0 +1,72 @@
+version: '3'
+
+# WALFA root Taskfile — go-task v3 (CLI 3.53.1 pinned, see ADR-000 / docs/versions.md).
+# No Makefile may exist in this repo. Everything invokes `task <name>`.
+
+tasks:
+  fmt:
+    desc: Format Go source in every service module
+    cmds:
+      - |
+        for m in services/*/; do
+          [ -f "$m/go.mod" ] && (cd "$m" && go fmt ./...) || true
+        done
+      - terraform fmt -check -recursive 2>/dev/null || true
+
+  lint:
+    desc: Run linters across every service module
+    cmds:
+      - |
+        for m in services/*/; do
+          [ -f "$m/go.mod" ] && (cd "$m" && golangci-lint run ./...) || true
+        done
+
+  test:
+    desc: Run tests across every service module
+    cmds:
+      - |
+        for m in services/*/; do
+          [ -f "$m/go.mod" ] && (cd "$m" && go test ./...) || true
+        done
+      - python3 scripts/validate-envelope.py
+
+  test-race:
+    desc: Run tests with race detector across every service module
+    cmds:
+      - |
+        for m in services/*/; do
+          [ -f "$m/go.mod" ] && (cd "$m" && go test -race ./...) || true
+        done
+
+  build:
+    desc: Build every service module
+    cmds:
+      - |
+        for m in services/*/; do
+          [ -f "$m/go.mod" ] && (cd "$m" && go build ./...) || true
+        done
+
+  docker-build:
+    desc: "Build Docker images for every service (TODO - Phase 22)"
+    cmds:
+      - 'echo "TODO: docker-build - no Dockerfiles yet"'
+
+  migrate-status:
+    desc: "Show migration status for every service (TODO - Phase 10+)"
+    cmds:
+      - 'echo "TODO: migrate-status - no service binaries yet"'
+
+  dev-up:
+    desc: Start local dev dependencies (Oracle, Valkey, Keycloak)
+    cmds:
+      - docker compose -f scripts/dev-compose.yml up -d
+
+  dev-down:
+    desc: Stop local dev dependencies and remove volumes
+    cmds:
+      - docker compose -f scripts/dev-compose.yml down -v
+
+  dev-logs:
+    desc: Follow logs from local dev dependencies
+    cmds:
+      - docker compose -f scripts/dev-compose.yml logs -f

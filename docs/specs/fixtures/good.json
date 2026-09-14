@@ -1,0 +1,11 @@
+{
+  "event_id": "01920b3c-7a6d-7f33-8a21-4f51e06497f1",
+  "occurred_at": "2026-09-14T10:30:00Z",
+  "aggregate_type": "user",
+  "aggregate_id": "user-123",
+  "entity_version": 1,
+  "event_type": "user.created.v1",
+  "payload": {
+    "display_name": "Test User"
+  }
+}

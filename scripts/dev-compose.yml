@@ -1,0 +1,57 @@
+# WALFA local development dependencies
+#
+# ========================================================================
+# WARNING: DEV-ONLY CREDENTIALS
+# ========================================================================
+# These passwords are NOT secrets. They are for local development ONLY.
+# NEVER reuse these values in any other environment.
+# NEVER commit real credentials to this file.
+# ========================================================================
+
+services:
+  oracle:
+    image: gvenzl/oracle-free:slim
+    container_name: walfa-oracle
+    environment:
+      ORACLE_PASSWORD: dev-only-not-secret
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 60s
+
+  valkey:
+    image: valkey/valkey:9.1.1
+    container_name: walfa-valkey
+    command: valkey-server --requirepass dev-only
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "valkey-cli", "-a", "dev-only", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.3
+    container_name: walfa-keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080; echo -e 'GET /health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3; cat <&3 | grep -q '200\\|UP'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+volumes:
+  oracle-data:

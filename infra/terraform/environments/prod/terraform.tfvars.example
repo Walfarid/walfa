@@ -1,0 +1,17 @@
+# Copy this file to prod.tfvars and fill in real values.
+# prod.tfvars is gitignored — NEVER commit it.
+
+compartment_id           = "ocid1.compartment.oc1..example"
+tenancy_ocid             = "ocid1.tenancy.oc1..example"
+object_storage_namespace = "your-namespace"
+
+# region                     = "ap-singapore-1"   # default
+# kubernetes_version         = "v1.36.1"           # check available versions in OCI console
+# node_ocpus                = 4                    # ARM64 Ampere A1 Always Free (2 nodes × 2 OCPU)
+# node_memory_gbs           = 24                   # ARM64 Ampere A1 Always Free (2 nodes × 12 GB)
+# boot_volume_size_gbs      = 200                  # 200 GB per node
+# node_count                = 2                    # two worker nodes for pod redundancy
+# api_endpoint_private      = false                # public API endpoint (Phase 8, §11.1)
+# ssh_public_key            = ""                   # inline SSH public key
+# bastion_allowed_cidrs     = ["<operator-ip>/32"] # NEVER 0.0.0.0/0
+# github_actions_matching_rule = "any {instance.principal.id = 'placeholder'}"

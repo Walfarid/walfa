@@ -1,0 +1,31 @@
+# Terraform
+*.tfvars
+*.tfstate*
+.terraform/
+
+# Secrets / wallets
+*.pem
+*.key
+*.sso
+*.p12
+cwallet.sso
+ewallet.p12
+tnsnames.ora
+sqlnet.ora
+
+# Environment
+.env
+.env.*
+local-env.sh
+local-env*.sh
+
+# Frontend
+node_modules/
+dist/
+.nuxt/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store

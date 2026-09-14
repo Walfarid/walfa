@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://walfa.dev/schemas/event-envelope.v1.json",
+  "title": "WALFA Event Envelope v1",
+  "description": "Canonical envelope for all WALFA integration events.",
+  "type": "object",
+  "required": [
+    "event_id",
+    "occurred_at",
+    "aggregate_type",
+    "aggregate_id",
+    "entity_version",
+    "event_type",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this event (UUID v7)."
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp of when the event occurred."
+    },
+    "aggregate_type": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Domain aggregate that owns this event (e.g. user, article)."
+    },
+    "aggregate_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the aggregate instance."
+    },
+    "entity_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version of the payload (starts at 1)."
+    },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z-]+\\.v1$",
+      "description": "Dotted event name: <aggregate>.<event-name>.v1"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific data."
+    }
+  },
+  "additionalProperties": false
+}

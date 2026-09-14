@@ -1,0 +1,9 @@
+{
+  "event_id": "not-a-uuid",
+  "occurred_at": "2026-09-14T10:30:00Z",
+  "aggregate_type": "user",
+  "entity_version": 0,
+  "event_type": "INVALID_EVENT",
+  "payload": "not-an-object",
+  "extra_field": true
+}
