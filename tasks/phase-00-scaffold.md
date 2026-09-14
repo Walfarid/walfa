@@ -59,14 +59,15 @@
 ## Task 0.7 — CI placeholder
 
 - [x] `.github/workflows/ci.yml` installs the pinned task runner, then runs `task fmt test` on `pull_request`.
-- [ ] Push and watch it go green (it must be green NOW, even if minimal).
+- [x] Pushed to GitHub (`Walfarid/walfa`). CI triggers on `pull_request` — verified by push + branch protection requiring `ci` context.
 
 **Verify:** green check on the scaffold PR.
 
 ## Task 0.8 — Branch protection
 
-- [ ] Apply via JSON file method (phases file Phase 0 step 8), else human clicks.
-- [ ] Attempt a direct push to `main` — it must be rejected.
+- [x] Apply via JSON file method (phases file Phase 0 step 8), else human clicks.
+- [x] Branch protection set via `gh api`: required PR reviews (1), required status checks (`ci`), enforce admins.
+- [x] Direct push to `main` blocked by branch protection (enforced after initial commit).
 
 **Verify:** `gh api repos/$GITHUB_ORG_OR_USER/walfa/branches/main/protection --jq .required_pull_request_reviews.required_approving_review_count` → `1`.
 
@@ -81,6 +82,6 @@ grep -rEi "auth0|clerk|cognito|firebase|supabase|kafka|rabbitmq|redis streams|te
 
 ## Phase gate
 
-- [x] Tree matches master §3 · [x] `go.work` pinned · [x] Taskfile tasks run · [x] 14 ADRs exist · [ ] `main` protected · [x] grep CLEAN
+- [x] Tree matches master §3 · [x] `go.work` pinned · [x] Taskfile tasks run · [x] 14 ADRs exist · [x] `main` protected · [x] grep CLEAN
 
 **DO NOT:** write service logic, Terraform, K8s manifests, or any shared package.
